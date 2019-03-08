@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+    {{block.super}} | Projeto
+{% endblock head_title %}
+
+
+{% block javascript %}
+
+ <script type="text/javascript">
+
+
+  $( function() {
+    $( ".dateinput" ).datepicker({
+		monthNames: [ "Janeiro", "Fevereiro", "Março", "Abril", "Março", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" ]})
+  } );
+  
+  </script>
+  
+{% endblock javascript %}
+
+
+{% block content %}
+
+<h1>Projeto</h1>
+<div class="row">
+    <div class="col-12">
+		{% crispy form %}
+    </div>
+</div>
+
+{% endblock content %}
+
+
+
+

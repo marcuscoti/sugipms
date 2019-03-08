@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block head_title %}
+    {{block.super}} | Projects
+{% endblock head_title %}
+
+{% block javascript %} {% endblock javascript %}
+
+{% block content %}
+
+<h1>Lista de Grupos</h1>
+
+<div class="row">
+    <div class="col-12">
+		<a class="btn btn-success btn-sm" href="{% url 'groups:create' %}" role="button">Novo Grupo</a>
+        <br>
+        <br>
+        <table class="table table-sm table-hover table-bordered text-center">
+          <thead>
+            <tr class="table-success">
+				<th scope="col">Projeto</th>
+                <th scope="col">Nome</th>
+				<th scope="col">Ações</th>
+            </tr>
+          </thead>
+            <tbody>
+        {% for group in group_list %}
+                <tr>
+                    <th scope="row">{{group.project}}</th>
+					<td>{{group.get_group}}</td>
+                    <td>
+						<a class="btn btn-primary btn-sm" href="{% url 'groups:update' pk=group.id %}" role="button"><i class="fa fa-edit"></i> Editar</a>
+						<button type="button" onclick="deleteModal({{group.id}})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Remover</button>
+						<input type="hidden" id="delete-{{group.id}}" value="{% url 'groups:delete' pk=group.id %}">
+                    </td>
+                </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- Modal content-->
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Remover</h4>
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir?</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-danger" id="btn-confirm-delete" href="#" role="button">Sim, Remover</a>
+                <button type="button"  class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script type="text/javascript">
+    function deleteModal(id){
+		var deleteUrl = $("#delete-"+id)[0].baseURI + 'delete/' + id ;
+        $("#btn-confirm-delete")[0].href = deleteUrl;
+		console.log(deleteUrl)
+        console.log($("#btn-confirm-delete"))
+        $("#deleteModal").modal();
+    };
+    </script>
+
+
+{% endblock content %}
+

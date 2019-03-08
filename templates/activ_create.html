@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+    {{block.super}} | Atividades
+{% endblock head_title %}
+
+
+{% block javascript %}
+
+ <script type="text/javascript">
+
+
+  $( function() {
+    $( ".dateinput" ).datepicker({
+		monthNames: [ "Janeiro", "Fevereiro", "Março", "Abril", "Março", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" ]})
+  } );
+  
+  </script>
+  
+
+  
+{% endblock javascript %}
+
+
+{% block content %}
+
+<h1>Atividades</h1>
+<div class="row">
+    <div class="col-12">
+		{% crispy form %}
+
+		<input type="hidden" id="load_groups" value="{% url 'activities:ajax_load_groups' %}">
+    </div>
+</div>
+
+  <script>
+    $("#id_project").change(function () {
+      var url = $("#load_groups").val();
+      var projectId = $(this).val();
+      $.ajax({
+        url: url,
+        data: {
+          'project': projectId
+        },
+        success: function (data) {
+          $("#id_group").html(data);
+        }
+      });
+
+    });
+  </script>
+
+{% endblock content %}
+
+
+
+

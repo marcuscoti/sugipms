@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block head_title %}
+    {{block.super}} | Projects
+{% endblock head_title %}
+
+{% block javascript %} {% endblock javascript %}
+
+{% block content %}
+
+<h1>Lista de Atividades</h1>
+
+<div class="row">
+    <div class="col-12">
+		<a class="btn btn-success btn-sm" href="{% url 'activities:create' %}" role="button">Nova Atividade</a>
+        <br>
+        <br>
+        <table class="table table-sm table-hover table-bordered text-center">
+          <thead>
+            <tr class="table-success">
+				<th scope="col">Projeto</th>
+                <th scope="col">Grupo</th>
+				<th scope="col">Ação</th>
+				<th scope="col">Inicio Progamado</th>
+				<th scope="col">Duração (dias)</th>
+				<th scope="col">Término Progamado</th>
+				<th scope="col">Status</th>
+				<th scope="col">Ações</th>
+            </tr>
+          </thead>
+            <tbody>
+        {% for action in act_list %}
+                <tr>
+                    <th scope="row">{{action.group.project}}</th>
+					<td>{{action.group.get_group}}</td>
+					<td>{{action.action}}</td>
+					<td>{{action.start_estimated | date:"d/M/y"}}</td>
+					<td>{{action.duration_estimated}}</td>
+					<td>{{action.end_estimated | date:"d/M/y"}}</td>
+					<td>{{action.get_status}}</td>
+                    <td>
+						<a class="btn btn-primary btn-sm" href="{% url 'activities:update' pk=action.id %}" role="button"><i class="fa fa-edit"></i> Editar</a>
+						<button type="button" onclick="deleteModal({{action.id}})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Remover</button>
+						<input type="hidden" id="delete-{{action.id}}" value="{% url 'activities:delete' pk=action.id %}">
+                    </td>
+                </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- Modal content-->
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Remover</h4>
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir?</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-danger" id="btn-confirm-delete" href="#" role="button">Sim, Remover</a>
+                <button type="button"  class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script type="text/javascript">
+    function deleteModal(id){
+		var deleteUrl = $("#delete-"+id)[0].baseURI + 'delete/' + id ;
+        $("#btn-confirm-delete")[0].href = deleteUrl;
+		console.log(deleteUrl)
+        console.log($("#btn-confirm-delete"))
+        $("#deleteModal").modal();
+    };
+    </script>
+
+
+{% endblock content %}
+

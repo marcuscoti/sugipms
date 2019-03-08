@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block head_title %}
+    {{block.super}} | RAT
+{% endblock head_title %}
+
+
+{% block content %}
+<h1>Detalhes da RAT</h1>
+<div class="row">
+    <div class="col-4">
+        {{rat.chg}}
+    </div>
+</div>
+
+{% endblock content %}

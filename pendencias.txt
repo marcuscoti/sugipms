@@ -1,0 +1,5 @@
+- Criar detail para Projetos
+- Criar detail para Grupos
+- Criar detail para Atividades
+- Criar ajax para select do Projeto e Grupo na Atividade
+- Criar ajax para cálculo do final estimado na Atividade
